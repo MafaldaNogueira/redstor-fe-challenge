@@ -1,27 +1,31 @@
-<!-- toDo Could you optimise this piece of code? -->
-<mat-toolbar>
-  <span>Redstor FE Challenger</span>
-</mat-toolbar>
+<!-- toDo Could you optimise this piece of code?  done -->
+<app-toolbar></app-toolbar>
 
-<!-- toDo Could you optimise this piece of code? -->
+<!-- toDo Could you optimise this piece of code? done -->
 <div class="breadcrumbs">
-  <a class="active"><span>Collections</span></a>
+  <span class="breadcrumb-item active">Collections</span>
 </div>
 
 <div class="layout-container">
   <!-- toDo Could you optimise this piece of code? -->
-  <mat-progress-bar *ngIf="isLoading"></mat-progress-bar>
-
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
   <div class="gallery">
-    <!-- toDo Is there another way to rewrite this with new Angular 17 features? -->
-    <ng-container *ngFor="let collection of collections">
-      <!-- toDO Could you improve the styling to be responsive? -->
-      <mat-card class="gallery-item thumbnails" [routerLink]="'/collection/' + collection.id">
-        <img mat-card-image [src]="collection.cover_photo.urls.small" [alt]="collection.cover_photo.description" />
-        <mat-card-content>
-          <p class="title">{{ collection.title }}</p>
+    <!-- toDo Is there another way to rewrite this with new Angular 17 features? done-->
+    @for (collection of collections; track collection.id) {
+
+    <!-- toDO Could you improve the styling to be responsive? done -->
+    <mat-card class="gallery-item thumbnails" [routerLink]="'/collection/' + collection.id">
+      <img mat-card-image [src]="collection.cover_photo.urls.small" [alt]="collection.cover_photo.description" />
+      <mat-card-content>
+        <p class="title">{{ collection.title }}</p>
         </mat-card-content>
       </mat-card>
-    </ng-container>
+    }
   </div>
+</div>
+<!-- Pagination -->
+<div class="pagination" *ngIf="collections.length < totalCollections">
+  <button mat-button color="primary" (click)="onLoadMore()" [disabled]="isLoadingMoreItems">
+    {{ isLoadingMoreItems ? 'Loading...' : 'Load More' }}
+  </button>
 </div>
